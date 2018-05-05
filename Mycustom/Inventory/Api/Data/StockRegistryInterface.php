@@ -1,7 +1,6 @@
 <?php
 class StockRegistryInterface implements \Magento\CatalogInventory\Api\StockRegistryInterface
 {
-
     /**
      * @var StockRegistryInterface
      */
@@ -39,10 +38,10 @@ class StockRegistryInterface implements \Magento\CatalogInventory\Api\StockRegis
 
         if(!empty($product->getData('sku')))
         {
-            $product->setMerchantQty($stockItem);
-            $entityManager->save($product);
-
             $productStockItem = $this->stockRegistry->getStockItemBySku($productSku);
+            $product->setMerchantQty($productStockItem);
+            $entityManager->save($product);
+            
             $productStockItem->setQty($stockItem);
             $this->stockRegistry->updateStockItemBySku($productSku, $productStockItem);
         }
